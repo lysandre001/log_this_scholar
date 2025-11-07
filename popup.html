@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log this scholar</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Log this scholar</h1>
+    </div>
+    
+    <div class="content">
+      <button id="logBtn" class="copy-btn">
+        <span class="btn-text">Log this scholar</span>
+        <span class="btn-loading" style="display: none;">
+          <span class="spinner"></span>
+          <span>Extracting...</span>
+        </span>
+      </button>
+      
+      <div id="status" class="status" style="display: none;"></div>
+      
+      <!-- Information display area -->
+      <div id="infoDisplay" class="info-display" style="display: none;">
+        <div class="info-display-header">
+          <h3>Extracted Information</h3>
+        </div>
+        <div class="info-display-content">
+          <div class="info-field">
+            <label>Name:</label>
+            <span id="info-name">-</span>
+          </div>
+          <div class="info-field">
+            <label>Affiliation:</label>
+            <span id="info-affiliation">-</span>
+          </div>
+          <div class="info-field">
+            <label>Cited by:</label>
+            <span id="info-cited_by">-</span>
+          </div>
+          <div class="info-field">
+            <label>Canonical URL:</label>
+            <span id="info-canonical" class="info-url">-</span>
+          </div>
+          <div class="info-field">
+            <label>Homepage:</label>
+            <span id="info-homepage" class="info-url">-</span>
+          </div>
+          <div class="info-field">
+            <label>Research Topics:</label>
+            <span id="info-topics">-</span>
+          </div>
+          <div class="info-field info-output">
+            <label>Full Output:</label>
+            <textarea id="info-output" readonly class="info-textarea"></textarea>
+            <button id="copyOutputBtn" class="copy-output-btn">Copy Full Output</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <p class="info-text">Click the button on a Google Scholar profile page to extract standardized information.</p>
+        <p class="info-text">You can also right-click and select "Copy Scholar Info".</p>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
+
