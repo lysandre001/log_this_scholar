@@ -14,7 +14,9 @@ function extractScholarInfo() {
     cited_by: '',
     canonical: '',
     homepage: '',
-    topics: ''
+    topics: '',
+    tags: '',
+    memo: ''
   };
 
   console.log('[Log this scholar] Starting extraction...');
@@ -163,6 +165,22 @@ function extractScholarInfo() {
 }
 
 /**
+ * Escape CSV field (handle commas, quotes, and newlines)
+ * @param {string} field Field value to escape
+ * @returns {string} Escaped field value
+ */
+function escapeCSVField(field) {
+  if (!field) return '';
+  
+  const str = String(field);
+  // If field contains comma, quote, or newline, wrap in quotes and escape quotes
+  if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+    return '"' + str.replace(/"/g, '""') + '"';
+  }
+  return str;
+}
+
+/**
  * Format output as comma-separated single line text
  * @param {Object} info Extracted information object
  * @returns {string} Formatted text
@@ -174,7 +192,9 @@ function formatOutput(info) {
     info.cited_by || '',
     info.canonical || '',
     info.homepage || '',
-    info.topics || ''
+    info.topics || '',
+    info.tags || '',
+    escapeCSVField(info.memo || '')
   ].join(',');
 }
 

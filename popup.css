@@ -285,6 +285,63 @@ body {
   word-break: break-all;
 }
 
+.info-input {
+  margin-bottom: var(--spacing-md);
+}
+
+.info-input-field {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 0.5px solid var(--system-separator);
+  border-radius: var(--radius-sm);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-size: var(--font-size-body);
+  color: var(--system-label);
+  background-color: var(--system-background);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.info-input-field:focus {
+  outline: none;
+  border-color: var(--system-blue);
+  background-color: var(--system-background);
+}
+
+.info-input-field::placeholder {
+  color: var(--system-tertiary-label);
+}
+
+.info-textarea-input {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 0.5px solid var(--system-separator);
+  border-radius: var(--radius-sm);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-size: var(--font-size-body);
+  color: var(--system-label);
+  background-color: var(--system-background);
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: 1.47059;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.info-textarea-input:focus {
+  outline: none;
+  border-color: var(--system-blue);
+  background-color: var(--system-background);
+}
+
+.info-textarea-input::placeholder {
+  color: var(--system-tertiary-label);
+}
+
 .info-output {
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-md);

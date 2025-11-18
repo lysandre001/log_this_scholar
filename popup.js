@@ -39,6 +39,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Escape CSV field (handle commas, quotes, and newlines)
+  function escapeCSVField(field) {
+    if (!field) return '';
+    
+    const str = String(field);
+    // If field contains comma, quote, or newline, wrap in quotes and escape quotes
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+  }
+
+  // Process tags: convert comma-separated input to pipe-separated output
+  function processTags(tagsInput) {
+    if (!tagsInput) return '';
+    // Split by comma, trim each tag, filter empty, join with |
+    return tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0)
+      .join('|');
+  }
+
+  // Update output based on current input values
+  function updateOutput(info) {
+    const tagsInput = document.getElementById('info-tags').value || '';
+    const memoInput = document.getElementById('info-memo').value || '';
+    
+    const tags = processTags(tagsInput);
+    
+    // Format full output with CSV escaping
+    const output = [
+      info.name || '',
+      info.affiliation || '',
+      info.cited_by || '',
+      info.canonical || '',
+      info.homepage || '',
+      info.topics || '',
+      tags,
+      escapeCSVField(memoInput)
+    ].join(',');
+    
+    document.getElementById('info-output').value = output;
+  }
+
   // Display extracted information
   function displayInfo(info) {
     document.getElementById('info-name').textContent = info.name || '-';
@@ -48,16 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('info-homepage').textContent = info.homepage || '-';
     document.getElementById('info-topics').textContent = info.topics || '-';
     
-    // Format full output
-    const output = [
-      info.name || '',
-      info.affiliation || '',
-      info.cited_by || '',
-      info.canonical || '',
-      info.homepage || '',
-      info.topics || ''
-    ].join(',');
-    document.getElementById('info-output').value = output;
+    // Clear tags and memo inputs
+    document.getElementById('info-tags').value = '';
+    document.getElementById('info-memo').value = '';
+    
+    // Store info for later use in updateOutput
+    displayInfo.currentInfo = info;
+    
+    // Initial output update
+    updateOutput(info);
     
     // Show information area
     infoDisplay.style.display = 'block';
@@ -132,6 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       setLoading(false);
       showStatus(`Error: ${error.message}`, 'error');
+    }
+  });
+
+  // Listen to tags and memo input changes
+  const tagsInput = document.getElementById('info-tags');
+  const memoInput = document.getElementById('info-memo');
+  
+  tagsInput.addEventListener('input', () => {
+    if (displayInfo.currentInfo) {
+      updateOutput(displayInfo.currentInfo);
+    }
+  });
+  
+  memoInput.addEventListener('input', () => {
+    if (displayInfo.currentInfo) {
+      updateOutput(displayInfo.currentInfo);
     }
   });
 
