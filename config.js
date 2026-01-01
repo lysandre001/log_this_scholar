@@ -14,8 +14,8 @@ const CONFIG = {
   SUPABASE_URL: 'https://xxxxx.supabase.co',
   SUPABASE_ANON_KEY: 'your-anon-key-here',
   
-  // API 配置
-  API_URL: 'http://localhost:8000/api/v1',
+  // API 配置（不包含 /api/v1，由 api.js 添加）
+  API_URL: 'http://localhost:8000',
   
   // 官网配置
   WEB_URL: 'http://localhost:3000',

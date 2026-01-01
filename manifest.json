@@ -32,8 +32,8 @@
     },
     {
       "matches": [
-        "http://localhost:3000/extension-auth*",
-        "https://*/extension-auth*"
+        "http://localhost:3000/*",
+        "https://scholar-cat.vercel.app/*"
       ],
       "js": ["auth-listener.js"],
       "run_at": "document_end",

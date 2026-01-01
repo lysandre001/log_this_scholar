@@ -12,9 +12,9 @@ const CONFIG_LOCAL = {
   SUPABASE_URL: 'https://xxxxx.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
   
-  // API 配置
-  API_URL: 'http://localhost:8000/api/v1',  // 开发环境
-  // API_URL: 'https://your-domain.com/api/v1',  // 生产环境
+  // API 配置（不包含 /api/v1，由 api.js 添加）
+  API_URL: 'http://localhost:8000',  // 开发环境
+  // API_URL: 'https://your-domain.com',  // 生产环境
   
   // 官网配置
   WEB_URL: 'http://localhost:3000',  // 开发环境

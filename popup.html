@@ -3,32 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Academic think tank</title>
+  <title>Scholar Cat</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <div class="header">
-      <h1>Your Academic think tank</h1>
-      <div class="auth-status" id="authStatus">
-        <a href="#" id="authLink" style="font-size: 12px; color: #667eea; text-decoration: none;">登录</a>
-      </div>
+      <h1>Scholar Cat</h1>
     </div>
     
+    <!-- Main Content Card -->
     <div class="content">
-      <!-- 登录提示区域（未登录时显示） -->
-      <div id="authPrompt" class="auth-prompt" style="display: none;">
-        <p class="auth-prompt-text">Please login to use Scholar Cat</p>
-        <button id="goToLoginBtn" class="auth-btn">Go to Login</button>
+      <!-- 圆形主按钮 -->
+      <div class="main-action">
+        <button id="logBtn" class="copy-btn">
+          <span class="btn-icon">📚</span>
+          <span class="btn-text">log this</span>
+          <span class="btn-loading" style="display: none;">
+            <span class="spinner"></span>
+            <span style="font-size: 8px;">Extracting...</span>
+          </span>
+        </button>
       </div>
-      
-      <button id="logBtn" class="copy-btn">
-        <span class="btn-text">Log this scholar</span>
-        <span class="btn-loading" style="display: none;">
-          <span class="spinner"></span>
-          <span>Extracting...</span>
-        </span>
-      </button>
       
       <div id="status" class="status" style="display: none;"></div>
       
@@ -73,13 +70,13 @@
           <div class="info-field info-output">
             <label>Full Output:</label>
             <textarea id="info-output" readonly class="info-textarea"></textarea>
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
-              <button id="copyOutputBtn" class="copy-output-btn" style="flex: 1;">Copy Full Output</button>
-              <button id="saveToCloudBtn" class="save-cloud-btn" style="flex: 1;">
-                <span class="btn-text">💾 保存到云端</span>
+            <div class="action-buttons">
+              <button id="copyOutputBtn" class="copy-output-btn">Copy</button>
+              <button id="saveToCloudBtn" class="save-cloud-btn">
+                <span class="btn-text">Save it</span>
                 <span class="btn-loading" style="display: none;">
                   <span class="spinner"></span>
-                  <span>保存中...</span>
+                  <span>Saving...</span>
                 </span>
               </button>
             </div>
@@ -89,16 +86,72 @@
       
       <div class="info-section">
         <p class="info-text">Click the button on a Google Scholar profile page to extract standardized information.</p>
-        <p class="info-text">You can also right-click and select "Copy Scholar Info".</p>
+      </div>
+    </div>
+    
+    <!-- Footer: 官网跳转 + 登录状态 -->
+    <div class="footer">
+      <!-- 官网跳转按钮 -->
+      <button id="websiteBtn" class="website-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+        <span id="websiteBtnText">Go to Website</span>
+      </button>
+      
+      <!-- 账户区域 -->
+      <div class="account-section" id="accountSection">
+        <!-- 未登录状态 -->
+        <a href="#" id="loginLink" class="login-link">log in</a>
+        <!-- 已登录状态（默认隐藏） -->
+        <div id="accountInfo" class="account-info hidden">
+          <span class="user-email" id="userEmail"></span>
+          <button class="logout-btn" id="logoutBtn" title="退出登录">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
   
+  <!-- Login Modal -->
+  <div id="loginModal" class="login-modal-overlay hidden">
+    <div class="login-modal">
+      <h2>Scholar Cat</h2>
+      <p class="subtitle">登录到你的账户</p>
+      
+      <div id="loginError" class="error-message hidden"></div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">邮箱地址</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">密码</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="login-submit-btn" id="loginSubmitBtn">登录</button>
+      </form>
+      
+      <div class="modal-footer">
+        还没有账户？<a href="#" id="goToRegister">去官网注册</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 配置加载顺序很重要 -->
   <script src="config.local.js" onerror="console.log('config.local.js not found, using defaults')"></script>
   <script src="config.js"></script>
+  <script src="lib/config-loader.js"></script>
   <script src="lib/supabase.js"></script>
   <script src="lib/api.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
-
