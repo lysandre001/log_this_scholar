@@ -1,6 +1,7 @@
 # Chrome Extension
 *.crx
 *.pem
+config.local.js
 
 # OS
 .DS_Store

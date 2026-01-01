@@ -107,5 +107,25 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ success: true });
     return true;
   }
+  
+  if (request.action === 'authSuccess') {
+    // Authentication successful
+    console.log('[Scholar Cat] Authentication successful:', request.session?.user?.email);
+    
+    // 可选：显示通知
+    chrome.notifications.create({
+      type: 'basic',
+      iconUrl: 'icons/icon128.png',
+      title: 'Scholar Cat',
+      message: 'Successfully logged in! You can now use the extension.',
+      priority: 2
+    }).catch(err => {
+      // 如果通知权限未授予，忽略错误
+      console.log('Notification failed (permission may be missing):', err);
+    });
+    
+    sendResponse({ success: true });
+    return true;
+  }
 });
 

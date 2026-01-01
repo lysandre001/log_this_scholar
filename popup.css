@@ -72,6 +72,7 @@ body {
 }
 
 .header {
+  position: relative;
   margin-bottom: var(--spacing-lg);
   text-align: center;
 }
@@ -391,6 +392,102 @@ body {
 .copy-output-btn:active {
   opacity: 0.7;
   transform: scale(0.98);
+}
+
+/* Save to Cloud Button */
+.save-cloud-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-subhead);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.save-cloud-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.save-cloud-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.save-cloud-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.save-cloud-btn .btn-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Auth Prompt */
+.auth-prompt {
+  padding: var(--spacing-md);
+  background-color: var(--system-background);
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  border: 0.5px solid var(--system-separator);
+}
+
+.auth-prompt-text {
+  font-size: var(--font-size-body);
+  color: var(--system-label);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--system-blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.auth-btn:hover {
+  background-color: var(--system-blue-dark);
+}
+
+.auth-btn:active {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+/* Auth Status (右下角) */
+.auth-status {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+}
+
+.auth-status a {
+  font-size: var(--font-size-caption-1);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.auth-status a:hover {
+  opacity: 0.7;
 }
 
 /* Dark mode support (optional, for future) */

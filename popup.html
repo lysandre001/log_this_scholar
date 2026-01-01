@@ -10,9 +10,18 @@
   <div class="container">
     <div class="header">
       <h1>Your Academic think tank</h1>
+      <div class="auth-status" id="authStatus">
+        <a href="#" id="authLink" style="font-size: 12px; color: #667eea; text-decoration: none;">登录</a>
+      </div>
     </div>
     
     <div class="content">
+      <!-- 登录提示区域（未登录时显示） -->
+      <div id="authPrompt" class="auth-prompt" style="display: none;">
+        <p class="auth-prompt-text">Please login to use Scholar Cat</p>
+        <button id="goToLoginBtn" class="auth-btn">Go to Login</button>
+      </div>
+      
       <button id="logBtn" class="copy-btn">
         <span class="btn-text">Log this scholar</span>
         <span class="btn-loading" style="display: none;">
@@ -64,7 +73,16 @@
           <div class="info-field info-output">
             <label>Full Output:</label>
             <textarea id="info-output" readonly class="info-textarea"></textarea>
-            <button id="copyOutputBtn" class="copy-output-btn">Copy Full Output</button>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <button id="copyOutputBtn" class="copy-output-btn" style="flex: 1;">Copy Full Output</button>
+              <button id="saveToCloudBtn" class="save-cloud-btn" style="flex: 1;">
+                <span class="btn-text">💾 保存到云端</span>
+                <span class="btn-loading" style="display: none;">
+                  <span class="spinner"></span>
+                  <span>保存中...</span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -76,6 +94,10 @@
     </div>
   </div>
   
+  <script src="config.local.js" onerror="console.log('config.local.js not found, using defaults')"></script>
+  <script src="config.js"></script>
+  <script src="lib/supabase.js"></script>
+  <script src="lib/api.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

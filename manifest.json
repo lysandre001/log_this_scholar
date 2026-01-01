@@ -7,10 +7,15 @@
     "activeTab",
     "contextMenus",
     "clipboardWrite",
-    "scripting"
+    "scripting",
+    "storage",
+    "notifications"
   ],
   "host_permissions": [
-    "https://scholar.google.com/*"
+    "https://scholar.google.com/*",
+    "http://localhost:8000/*",
+    "http://localhost:3000/*",
+    "https://*.supabase.co/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -23,6 +28,15 @@
       ],
       "js": ["content.js"],
       "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://localhost:3000/extension-auth*",
+        "https://*/extension-auth*"
+      ],
+      "js": ["auth-listener.js"],
+      "run_at": "document_end",
       "all_frames": false
     }
   ],

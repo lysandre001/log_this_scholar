@@ -5,7 +5,7 @@ console.log('[Log this scholar] Content script loaded on:', window.location.href
 
 /**
  * Extract scholar information
- * @returns {Object} Object containing name, affiliation, cited_by, canonical, homepage, topics
+ * @returns {Object} Object containing name, affiliation, cited_by, canonical, homepage, topics, parseSuccess
  */
 function extractScholarInfo() {
   const result = {
@@ -16,7 +16,8 @@ function extractScholarInfo() {
     homepage: '',
     topics: '',
     tags: '',
-    memo: ''
+    memo: '',
+    parseSuccess: false  // Flag to indicate if parsing was successful
   };
 
   console.log('[Log this scholar] Starting extraction...');
@@ -155,10 +156,20 @@ function extractScholarInfo() {
     result.topics = topics.join('|');
     console.log('[Log this scholar] Topics:', result.topics);
 
+    // Check if parsing was successful (at least name should be present for a valid profile)
+    // A valid Google Scholar profile should have at least a name
+    if (result.name && result.name.trim() !== '') {
+      result.parseSuccess = true;
+    } else {
+      result.parseSuccess = false;
+      console.log('[Log this scholar] Parse failed: No name found');
+    }
+
     console.log('[Log this scholar] Extraction completed:', result);
   } catch (error) {
     console.error('[Log this scholar] Error extracting information:', error);
     // Graceful degradation: return empty strings but maintain format
+    result.parseSuccess = false;
   }
 
   return result;

@@ -1,11 +1,36 @@
 // popup.js - Handle popup interface interactions
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // 检查认证状态
+  const isAuthenticated = await checkAuthStatus();
   const logBtn = document.getElementById('logBtn');
   const statusDiv = document.getElementById('status');
   const infoDisplay = document.getElementById('infoDisplay');
+  const authPrompt = document.getElementById('authPrompt');
   const btnText = logBtn.querySelector('.btn-text');
   const btnLoading = logBtn.querySelector('.btn-loading');
+  
+  // 根据认证状态显示/隐藏登录提示和功能按钮
+  if (!isAuthenticated) {
+    authPrompt.style.display = 'block';
+    logBtn.style.display = 'none';
+  } else {
+    authPrompt.style.display = 'none';
+    logBtn.style.display = 'block';
+  }
+  
+  // 登录提示按钮点击事件
+  document.getElementById('goToLoginBtn').addEventListener('click', () => {
+    const webUrl = typeof CONFIG !== 'undefined' ? CONFIG.WEB_URL : 'http://localhost:3000';
+    window.open(`${webUrl}/extension-auth`, '_blank');
+  });
+  
+  // 登录链接点击事件
+  document.getElementById('authLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const webUrl = typeof CONFIG !== 'undefined' ? CONFIG.WEB_URL : 'http://localhost:3000';
+    window.open(`${webUrl}/extension-auth`, '_blank');
+  });
 
   // Show status message
   function showStatus(message, type = 'info') {
@@ -224,6 +249,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Save to cloud button
+  document.getElementById('saveToCloudBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('saveToCloudBtn');
+    const btnText = btn.querySelector('.btn-text');
+    const btnLoading = btn.querySelector('.btn-loading');
+    
+    // Check if there's extracted info
+    if (!displayInfo.currentInfo) {
+      showStatus('请先提取学者信息', 'error');
+      return;
+    }
+    
+    // Set button loading state
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline-flex';
+    
+    try {
+      // Prepare scholar data
+      const info = displayInfo.currentInfo;
+      const tagsInput = document.getElementById('info-tags').value || '';
+      const memoInput = document.getElementById('info-memo').value || '';
+      
+      const scholarData = {
+        name: info.name,
+        affiliation: info.affiliation || null,
+        cited_by: info.cited_by || null,
+        canonical: info.canonical,
+        homepage: info.homepage || null,
+        topics: info.topics || null,
+        tags: processTags(tagsInput) || null,
+        memo: memoInput || null,
+        source_url: info.source_url || null
+      };
+      
+      // Check if already exists
+      const checkResult = await checkScholarExists(info.canonical);
+      
+      if (checkResult.exists) {
+        // Ask user if they want to update
+        const confirm = window.confirm(
+          `学者 "${checkResult.name}" 已存在。\n是否要更新记录？`
+        );
+        
+        if (confirm) {
+          // Update existing record
+          await updateScholar(checkResult.scholar_id, scholarData);
+          showStatus('✓ 学者信息已更新', 'success');
+        } else {
+          showStatus('取消保存', 'info');
+        }
+      } else {
+        // Create new record
+        await createScholar(scholarData);
+        showStatus('✓ 学者信息已保存到云端', 'success');
+      }
+      
+    } catch (error) {
+      console.error('Save to cloud error:', error);
+      
+      if (error.message.includes('未登录')) {
+        showStatus('❌ 请先登录', 'error');
+        // Optionally open auth page
+        setTimeout(() => {
+          const webUrl = typeof CONFIG !== 'undefined' ? CONFIG.WEB_URL : 'http://localhost:3000';
+          window.open(`${webUrl}/extension-auth`, '_blank');
+        }, 1500);
+      } else {
+        showStatus(`❌ 保存失败: ${error.message}`, 'error');
+      }
+    } finally {
+      // Reset button state
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+  });
+
   // Check if current page is Google Scholar
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0] && !tabs[0].url.includes('scholar.google.com/citations')) {
@@ -232,3 +335,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+/**
+ * 检查认证状态
+ * @returns {Promise<boolean>} 是否已登录
+ */
+async function checkAuthStatus() {
+  const authLink = document.getElementById('authLink');
+  
+  if (typeof getSession === 'undefined') {
+    // Supabase 库未加载，跳过
+    authLink.textContent = '登录';
+    authLink.style.color = '#667eea';
+    return false;
+  }
+  
+  try {
+    const { session, user, error } = await getSession();
+    
+    if (!error && user) {
+      // 已登录
+      authLink.textContent = user.email?.split('@')[0] || '已登录';
+      authLink.style.color = '#4CAF50';
+      return true;
+    } else {
+      // 未登录
+      authLink.textContent = '登录';
+      authLink.style.color = '#667eea';
+      return false;
+    }
+  } catch (e) {
+    console.log('Auth check failed:', e);
+    authLink.textContent = '登录';
+    authLink.style.color = '#667eea';
+    return false;
+  }
+}
