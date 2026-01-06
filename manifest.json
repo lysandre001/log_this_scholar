@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Log this scholar BETA",
+  "name": "Scholar Cat BETA",
   "version": "1.0.0",
   "description": "Extract standardized information from Google Scholar profile pages. This extension is currently in Beta testing phase.",
   "permissions": [

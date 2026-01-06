@@ -1,31 +1,31 @@
 /**
- * 认证页面逻辑
+ * Authentication page logic
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // 检查是否已登录
+  // Check if logged in
   await checkAuthStatus();
 
-  // Tab 切换
+  // Tab switching
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       const tabName = tab.dataset.tab;
       
-      // 更新 tab 样式
+      // Update tab styles
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       
-      // 切换表单
+      // Switch forms
       document.getElementById('loginForm').classList.remove('active');
       document.getElementById('registerForm').classList.remove('active');
       document.getElementById(`${tabName}Form`).classList.add('active');
       
-      // 清除状态消息
+      // Clear status message
       hideStatus();
     });
   });
 
-  // 登录表单
+  // Login form
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const btn = document.getElementById('loginBtn');
     btn.disabled = true;
-    btn.textContent = '登录中...';
+    btn.textContent = 'Signing in...';
     
     try {
       const { session, user, error } = await signIn(email, password);
@@ -42,25 +42,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (error) {
         showStatus(error, 'error');
         btn.disabled = false;
-        btn.textContent = '登录';
+        btn.textContent = 'Sign in';
         return;
       }
       
-      showStatus('登录成功！', 'success');
+      showStatus('Signed in successfully!', 'success');
       
-      // 显示用户信息
+      // Show user info
       setTimeout(() => {
         showUserInfo(user);
       }, 1000);
       
     } catch (error) {
-      showStatus('登录失败：' + error.message, 'error');
+      showStatus('Sign in failed: ' + error.message, 'error');
       btn.disabled = false;
-      btn.textContent = '登录';
+      btn.textContent = 'Sign in';
     }
   });
 
-  // 注册表单
+  // Register form
   document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -69,18 +69,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
     
     if (password.length < 6) {
-      showStatus('密码至少需要 6 个字符', 'error');
+      showStatus('Password must be at least 6 characters', 'error');
       return;
     }
     
     if (password !== passwordConfirm) {
-      showStatus('两次输入的密码不一致', 'error');
+      showStatus('Passwords do not match', 'error');
       return;
     }
     
     const btn = document.getElementById('registerBtn');
     btn.disabled = true;
-    btn.textContent = '注册中...';
+    btn.textContent = 'Signing up...';
     
     try {
       const { user, error } = await signUp(email, password);
@@ -88,50 +88,60 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (error) {
         showStatus(error, 'error');
         btn.disabled = false;
-        btn.textContent = '注册';
+        btn.textContent = 'Sign up';
         return;
       }
       
-      showStatus('注册成功！请查收邮箱验证链接（如果需要），或直接登录。', 'success');
+      showStatus('Registration successful! Please check your email for verification link (if required), or sign in directly.', 'success');
       
-      // 切换到登录表单
+      // Switch to login form
       setTimeout(() => {
         document.querySelector('[data-tab="login"]').click();
         document.getElementById('loginEmail').value = email;
       }, 2000);
       
     } catch (error) {
-      showStatus('注册失败：' + error.message, 'error');
+      showStatus('Registration failed: ' + error.message, 'error');
       btn.disabled = false;
-      btn.textContent = '注册';
+      btn.textContent = 'Sign up';
     }
   });
 
-  // 退出登录
+  // Logout
   document.getElementById('logoutBtn').addEventListener('click', async () => {
     const { error } = await signOut();
     
     if (error) {
-      showStatus('退出失败：' + error, 'error');
+      showStatus('Sign out failed: ' + error, 'error');
       return;
     }
     
-    showStatus('已退出登录', 'info');
+    showStatus('Signed out', 'info');
     
     setTimeout(() => {
       hideUserInfo();
     }, 1000);
   });
 
-  // 返回主界面
+  // Back to main interface
   document.getElementById('goToMainBtn').addEventListener('click', (e) => {
     e.preventDefault();
     window.location.href = 'popup.html';
   });
+  
+  // Privacy Policy link
+  const privacyLink = document.getElementById('privacyLink');
+  if (privacyLink) {
+    privacyLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const webUrl = typeof CONFIG !== 'undefined' ? CONFIG.WEB_URL : 'http://localhost:3000';
+      window.open(`${webUrl}/privacy`, '_blank');
+    });
+  }
 });
 
 /**
- * 检查认证状态
+ * Check authentication status
  */
 async function checkAuthStatus() {
   const { session, user, error } = await getSession();
@@ -144,7 +154,7 @@ async function checkAuthStatus() {
 }
 
 /**
- * 显示用户信息
+ * Show user information
  */
 function showUserInfo(user) {
   document.getElementById('authForms').style.display = 'none';
@@ -155,7 +165,7 @@ function showUserInfo(user) {
 }
 
 /**
- * 隐藏用户信息
+ * Hide user information
  */
 function hideUserInfo() {
   document.getElementById('authForms').style.display = 'block';
@@ -163,7 +173,7 @@ function hideUserInfo() {
 }
 
 /**
- * 显示状态消息
+ * Show status message
  */
 function showStatus(message, type = 'info') {
   const statusDiv = document.getElementById('status');
@@ -171,7 +181,7 @@ function showStatus(message, type = 'info') {
   statusDiv.className = `status ${type}`;
   statusDiv.style.display = 'block';
   
-  // 自动隐藏成功/信息消息
+  // Auto-hide success/info messages
   if (type === 'success' || type === 'info') {
     setTimeout(() => {
       hideStatus();
@@ -180,7 +190,7 @@ function showStatus(message, type = 'info') {
 }
 
 /**
- * 隐藏状态消息
+ * Hide status message
  */
 function hideStatus() {
   document.getElementById('status').style.display = 'none';

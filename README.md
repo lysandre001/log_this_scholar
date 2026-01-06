@@ -1,73 +1,73 @@
 # Scholar Cat Extension
 
-Chrome 浏览器插件，用于从 Google Scholar 提取学者信息并保存到云端。
+A Chrome browser extension for extracting scholar information from Google Scholar and saving to the cloud.
 
-## ✨ 核心功能
+## ✨ Core Features
 
-### 1. 信息提取
-- ✅ **一键提取**：从 Google Scholar 研究者页面提取标准化学者信息
-- ✅ **提取字段**：姓名、机构、引用数、Canonical URL、主页、研究主题
-- ✅ **自定义标签**：支持添加自定义标签（逗号分隔输入，自动转换为管道分隔输出）
-- ✅ **备注功能**：支持添加备注信息，自动处理 CSV 转义（支持逗号、引号等特殊字符）
+### 1. Information Extraction
+- ✅ **One-Click Extraction**: Extract standardized scholar information from Google Scholar researcher pages
+- ✅ **Extracted Fields**: Name, affiliation, citations, canonical URL, homepage, research topics
+- ✅ **Custom Tags**: Support for adding custom tags (comma-separated input, automatically converted to pipe-separated output)
+- ✅ **Memo Function**: Support for adding memo information with automatic CSV escaping (supports commas, quotes, and other special characters)
 
-### 2. 云端同步
-- ✅ **保存到云端**：将提取的学者信息保存到个人账户
-- ✅ **重复检测**：自动检测学者是否已存在，支持更新已有记录
-- ✅ **数据同步**：与官网（web）端数据完全同步
+### 2. Cloud Synchronization
+- ✅ **Save to Cloud**: Save extracted scholar information to personal account
+- ✅ **Duplicate Detection**: Automatically detect if scholar already exists, support updating existing records
+- ✅ **Data Sync**: Complete data synchronization with the web platform
 
-### 3. 用户认证
-- ✅ **统一认证**：与官网使用相同的 Supabase 认证体系
-- ✅ **自动同步**：在官网登录后，插件自动同步登录状态
-- ✅ **状态同步**：插件和官网任意一端登录，另一端自动同步状态
-- ✅ **无需登录使用**：提取和复制功能无需登录，只有保存到云端时才需要
+### 3. User Authentication
+- ✅ **Unified Authentication**: Uses the same Supabase authentication system as the website
+- ✅ **Auto Sync**: Extension automatically syncs login status after logging in on the website
+- ✅ **Status Sync**: Login on either extension or website automatically syncs to the other
+- ✅ **No Login Required for Basic Use**: Extract and copy functions work without login, only cloud saving requires authentication
 
-### 4. 交互方式
-- ✅ **右键菜单**：在 Google Scholar 页面右键选择 "Copy Scholar Info"
-- ✅ **弹出窗口**：点击插件图标，使用可视化界面
-- ✅ **状态反馈**：优雅的错误处理和状态通知
+### 4. Interaction Methods
+- ✅ **Context Menu**: Right-click on Google Scholar pages and select "Copy Scholar Info"
+- ✅ **Popup Interface**: Click extension icon for visual interface
+- ✅ **Status Feedback**: Elegant error handling and status notifications
 
-## 🚀 安装
+## 🚀 Installation
 
-1. 打开 Chrome 浏览器，访问 `chrome://extensions/`
-2. 开启右上角的"开发者模式"
-3. 点击"加载已解压的扩展程序"
-4. 选择 `extension/` 目录
-5. 插件安装完成！
+1. Open Chrome browser and navigate to `chrome://extensions/`
+2. Enable "Developer mode" in the top right corner
+3. Click "Load unpacked"
+4. Select the `extension/` directory
+5. Extension installed successfully!
 
-## 📖 使用方法
+## 📖 Usage
 
-### 方法 1：右键菜单（快速）
+### Method 1: Context Menu (Quick)
 
-1. 打开任意 Google Scholar 研究者页面（URL 格式：`https://scholar.google.com/citations?user=...`）
-2. 在页面上右键点击
-3. 选择 "Copy Scholar Info"
-4. 信息已复制到剪贴板
+1. Open any Google Scholar researcher page (URL format: `https://scholar.google.com/citations?user=...`)
+2. Right-click anywhere on the page
+3. Select "Copy Scholar Info"
+4. Information is copied to clipboard
 
-### 方法 2：插件弹出窗口（推荐）
+### Method 2: Extension Popup (Recommended)
 
-1. 打开任意 Google Scholar 研究者页面
-2. 点击浏览器工具栏中的插件图标
-3. 点击圆形 "log this" 按钮提取信息
-4. 在弹出窗口中查看和编辑提取的信息：
-   - 查看所有自动提取的字段
-   - **添加标签**：在 "Tags" 输入框中输入标签，用逗号分隔（如 `tag1, tag2, tag3`）
-   - **添加备注**：在 "Memo" 文本框中输入备注，支持多行和特殊字符
-5. 在 "Full Output" 区域查看完整的 CSV 格式输出
-6. 点击 "Copy" 按钮复制完整信息到剪贴板
-7. （可选）点击 "Save it" 按钮保存到云端账户
+1. Open any Google Scholar researcher page
+2. Click the extension icon in the browser toolbar
+3. Click the circular "log this" button to extract information
+4. View and edit extracted information in the popup window:
+   - View all automatically extracted fields
+   - **Add Tags**: Enter tags in the "Tags" input field, separated by commas (e.g., `tag1, tag2, tag3`)
+   - **Add Memo**: Enter memo in the "Memo" text area, supports multi-line and special characters
+5. View complete CSV format output in the "Full Output" area
+6. Click "Copy" button to copy complete information to clipboard
+7. (Optional) Click "Save it" button to save to cloud account
 
-### 登录和云端保存
+### Login and Cloud Saving
 
-**首次使用云端功能：**
-1. 点击 "Save it" 按钮时会提示登录
-2. 点击 "log in" 链接打开登录窗口
-3. 输入邮箱和密码登录
-4. 登录后即可保存数据到云端
+**First time using cloud features:**
+1. Click "Save it" button and you'll be prompted to log in
+2. Click "log in" link to open login window
+3. Enter email and password to log in
+4. After login, you can save data to the cloud
 
-**或通过官网登录：**
-1. 在官网（web）登录后
-2. 插件会自动同步登录状态
-3. 无需在插件中再次登录
+**Or login through website:**
+1. After logging in on the website
+2. Extension automatically syncs login status
+3. No need to log in again in the extension
 
 ## 📋 输出格式
 

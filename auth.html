@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scholar Catcher - 登录</title>
+  <title>Scholar Cat - Sign In</title>
   <style>
     * {
       margin: 0;
@@ -185,56 +185,61 @@
 <body>
   <div class="auth-container">
     <div class="header">
-      <h1>Scholar Catcher</h1>
-      <p>学者信息管理工具</p>
+      <h1>Scholar Cat</h1>
+      <p>Scholar Information Management Tool</p>
     </div>
 
     <div id="status" class="status"></div>
 
-    <!-- 已登录状态 -->
+    <!-- Logged in state -->
     <div id="userInfo" class="user-info">
       <div class="email" id="userEmail">-</div>
       <div class="user-id" id="userId">-</div>
-      <button class="btn" id="logoutBtn">退出登录</button>
-      <a href="#" class="link" id="goToMainBtn">返回主界面</a>
+      <button class="btn" id="logoutBtn">Sign out</button>
+      <a href="#" class="link" id="goToMainBtn">Back to main</a>
     </div>
 
-    <!-- 未登录状态 -->
+    <!-- Not logged in state -->
     <div id="authForms">
       <div class="tab-container">
-        <div class="tab active" data-tab="login">登录</div>
-        <div class="tab" data-tab="register">注册</div>
+        <div class="tab active" data-tab="login">Sign in</div>
+        <div class="tab" data-tab="register">Sign up</div>
       </div>
 
-      <!-- 登录表单 -->
+      <!-- Login form -->
       <form id="loginForm" class="active">
         <div class="form-group">
-          <label for="loginEmail">邮箱</label>
+          <label for="loginEmail">Email</label>
           <input type="email" id="loginEmail" placeholder="your@email.com" required>
         </div>
         <div class="form-group">
-          <label for="loginPassword">密码</label>
+          <label for="loginPassword">Password</label>
           <input type="password" id="loginPassword" placeholder="••••••••" required>
         </div>
-        <button type="submit" class="btn" id="loginBtn">登录</button>
+        <button type="submit" class="btn" id="loginBtn">Sign in</button>
       </form>
 
-      <!-- 注册表单 -->
+      <!-- Register form -->
       <form id="registerForm">
         <div class="form-group">
-          <label for="registerEmail">邮箱</label>
+          <label for="registerEmail">Email</label>
           <input type="email" id="registerEmail" placeholder="your@email.com" required>
         </div>
         <div class="form-group">
-          <label for="registerPassword">密码</label>
-          <input type="password" id="registerPassword" placeholder="至少 6 个字符" required>
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" placeholder="At least 6 characters" required>
         </div>
         <div class="form-group">
-          <label for="registerPasswordConfirm">确认密码</label>
-          <input type="password" id="registerPasswordConfirm" placeholder="再次输入密码" required>
+          <label for="registerPasswordConfirm">Confirm Password</label>
+          <input type="password" id="registerPasswordConfirm" placeholder="Enter password again" required>
         </div>
-        <button type="submit" class="btn" id="registerBtn">注册</button>
+        <button type="submit" class="btn" id="registerBtn">Sign up</button>
       </form>
+      
+      <!-- Privacy Policy Link -->
+      <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee;">
+        <a href="#" id="privacyLink" class="link" style="font-size: 11px;">Privacy Policy</a>
+      </div>
     </div>
   </div>
 

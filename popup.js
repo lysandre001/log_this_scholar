@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     infoDisplay.style.display = 'block';
   }
 
-  // Log this scholar button click
+  // Scholar Cat button click
   logBtn.addEventListener('click', async () => {
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
